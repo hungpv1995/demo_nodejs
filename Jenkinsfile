@@ -31,21 +31,21 @@ pipeline {
             sh "docker rmi -f [dockerhub-repo]:$TAG"
         } 
     }
-	// stage ("Deploy ") {
-	//     agent {
-    //     node {
-    //         label "Target-Server"
-    //             customWorkspace "/home/ubuntu/jenkins/multi-branch/devops-training-$ENV/"
-    //         }
-    //     }
-    //     environment {
-    //         TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
-    //     }
-	// steps {
-    //         sh "sed -i 's/{tag}/$TAG/g' /home/ubuntu/jenkins/multi-branch/devops-training-$ENV/docker-compose.yaml"
-    //         sh "docker compose up -d"
-    //     }      
-    //    }
+	stage ("Deploy ") {
+	    agent {
+        node {
+            label "Target-Server"
+                customWorkspace "/home/ubuntu/jenkins/multi-branch/devops-training-$ENV/"
+            }
+        }
+        environment {
+            TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
+        }
+	steps {
+            sh "sed -i 's/{tag}/$TAG/g' /home/ubuntu/jenkins/multi-branch/devops-training-$ENV/docker-compose.yaml"
+            sh "docker compose up -d"
+        }      
+       }
    }
     
 }
