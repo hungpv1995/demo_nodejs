@@ -10,7 +10,7 @@ pipeline {
         agent {
             node {
                 label "Build-server"
-                customWorkspace "/home/ubuntu/jenkins/multi-branch/devops-training-$ENV/"
+                customWorkspace "/mnt/c/users/hungp/ubuntu/devops-training-$ENV/"
             }
         }
         environment {
