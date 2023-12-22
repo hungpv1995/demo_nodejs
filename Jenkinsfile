@@ -34,14 +34,14 @@ pipeline {
 	    agent {
             node {
                 label "Target-Server"
-                customWorkspace "/mnt/c/Users/hungp/ubuntu/jenkins-deploy/devops-training-$ENV/"
+                customWorkspace "/mnt/c/jenkins-prj/devops-training-$ENV/"
             }
         }
         environment {
             TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
         }
 	    steps {
-            sh "sed -i 's/{tag}/$TAG/g' /mnt/c/Users/hungp/ubuntu/jenkins-deploy/devops-training-$ENV/docker-compose.yaml"
+            sh "sed -i 's/{tag}/$TAG/g' /mnt/c/jenkins-prj/devops-training-$ENV/docker-compose.yaml"
             sh "docker compose up -d"
         }      
     }
