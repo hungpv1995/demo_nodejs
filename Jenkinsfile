@@ -21,13 +21,13 @@ pipeline {
 
             sh "cat docker.txt | docker login -u hungpv1195 --password-stdin"
             // tag docker image
-            sh "docker tag devops-training-nodejs-$ENV:latest [demo-build]:$TAG"
+            sh "docker tag devops-training-nodejs-$ENV:latest hungpv1195/demo-build:$TAG"
 
             //push docker image to docker hub
-            sh "docker push [demo-build]:$TAG"
+            sh "docker push hungpv1195/demo-build:$TAG"
 
             // remove docker image to reduce space on build server	
-            sh "docker rmi -f [demo-build]:$TAG"
+            sh "docker rmi -f hungpv1195/demo-build:$TAG"
         } 
     }
 	// stage ("Deploy ") {
