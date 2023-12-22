@@ -42,7 +42,7 @@ pipeline {
         }
 	    steps {
             sh "sed -i 's/{tag}/$TAG/g' D:/SETA/Workspace/Jenkins/devops-training-$ENV/docker-compose.yaml"
-            sh "docker compose up -d"
+            sh "docker compose up -d --force-recreate"
         }      
     }
    }
