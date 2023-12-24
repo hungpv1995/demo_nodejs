@@ -1,8 +1,10 @@
 pipeline {
    agent none
    environment {
-        ENV = "${env}"
+        ENV = "${buildENV}"
         NODE = "Build-server"
+        DB_PORT = "${ ENV == 'dev' ? '3306' : '3307' }"
+        APP_PORT = "${ ENV == 'dev' ? '3000' : '3001' }"
     }
 
    stages {
@@ -17,9 +19,7 @@ pipeline {
             TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
         }
         steps {
-            echo "%{env}"
-
-            sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV -f nodejs/Dockerfile"
+            sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV --build-arg APP_PORT=$APP_PORT -f nodejs/Dockerfile"
 
             sh "cat docker.txt | docker login -u hungpv1195 --password-stdin"
             // tag docker image

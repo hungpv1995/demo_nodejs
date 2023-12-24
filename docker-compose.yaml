@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:latest
-    container_name: db
+    container_name: db_${ENV}
     environment:
       MYSQL_ROOT_PASSWORD: training-2023
       MYSQL_DATABASE: users
@@ -15,28 +15,30 @@ services:
         max-size: "50m"
     restart: unless-stopped
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:${DB_PORT}"
     networks:
-      - app-network
+      - app-network-${ENV}
 
   app:
     image: hungpv1195/demo-build:{tag}
     build:
       context: nodejs/.
       dockerfile: Dockerfile
-    container_name: app
+    container_name: app_${ENV}
     depends_on:
       - db
     ports:
-      - "3000:3000"
+      - "${APP_PORT}:${APP_PORT}"
     environment:
       DB_HOST: db
       DB_USER: training
       DB_PASSWORD: training_pw
       DB_DATABASE: users
     networks:
-      - app-network
+      - app-network-${ENV}
 
 networks:
-  app-network:
+  app-network-dev:
+    external: true
+  app-network-prod:
     external: true
