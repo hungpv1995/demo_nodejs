@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+ARG BUILD_ENV
+
 WORKDIR /nodejs
 
 COPY package*.json ./
@@ -11,8 +13,6 @@ RUN echo "$BUILD_ENV"
 ENV BUILD_ENV "$BUILD_ENV"
 
 COPY . .
-
-ENV BUILD_ENV "$BUILD_ENV"
 
 # EXPOSE 3000
 
