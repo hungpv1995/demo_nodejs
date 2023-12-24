@@ -39,8 +39,8 @@ pipeline {
         }
         environment {
             TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
-            DB_PORT = "$ENV" == "dev" ? "3306" : "3307"
-            APP_PORT = "$ENV" == "dev" ? "3000" : "3001"
+            DB_PORT = "${ $ENV == 'dev' ? '3306' : '3307' }"
+            APP_PORT = "${ $ENV == 'dev' ? '3000' : '3001' }"
         }
 	    steps {
             sh "sed -i 's/{tag}/$TAG/g' D:/SETA/Workspace/Jenkins/devops-training-$ENV/docker-compose.yaml"
