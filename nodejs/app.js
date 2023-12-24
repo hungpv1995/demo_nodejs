@@ -1,24 +1,23 @@
 // app.js
-const express = require('express');
-const mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJSDoc = require('swagger-jsdoc');
+const express = require("express");
+const mysql = require("mysql2/promise");
+const bcrypt = require("bcrypt");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc");
 
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT;
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
-  host: 'db',
-  user: 'training',
-  password: 'training_pw',
-  database: 'users',
+  host: "db",
+  user: "training",
+  password: "training_pw",
+  database: "users",
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
-
 
 // Create users table if not exists
 pool.execute(`
@@ -38,10 +37,12 @@ const checkUserExists = async (req, res, next) => {
   const userId = req.params.id;
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [userId]);
+    const [rows] = await pool.execute("SELECT * FROM users WHERE id = ?", [
+      userId,
+    ]);
 
     if (!rows.length) {
-      res.status(404).json({ error: 'User not found' });
+      res.status(404).json({ error: "User not found" });
       return;
     }
 
@@ -49,7 +50,7 @@ const checkUserExists = async (req, res, next) => {
     next();
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -63,8 +64,8 @@ const checkUserExists = async (req, res, next) => {
  *       200:
  *         description: Pong response
  */
-app.get('/api/v1/ping', (req, res) => {
-  res.status(200).json({ message: 'pong' });
+app.get("/api/v1/ping", (req, res) => {
+  res.status(200).json({ message: "pong" });
 });
 
 // Get user by ID
@@ -84,7 +85,7 @@ app.get('/api/v1/ping', (req, res) => {
  *       200:
  *         description: User details
  */
-app.get('/api/v1/user/:id', checkUserExists, (req, res) => {
+app.get("/api/v1/user/:id", checkUserExists, (req, res) => {
   const { id, username, email } = req.user;
   res.json({ id, username, email });
 });
@@ -99,13 +100,13 @@ app.get('/api/v1/user/:id', checkUserExists, (req, res) => {
  *       200:
  *         description: List of users
  */
-app.get('/api/v1/users', async (req, res) => {
+app.get("/api/v1/users", async (req, res) => {
   try {
-    const [rows] = await pool.execute('SELECT id, username, email FROM users');
+    const [rows] = await pool.execute("SELECT id, username, email FROM users");
     res.json({ users: rows });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -136,11 +137,13 @@ app.get('/api/v1/users', async (req, res) => {
  *       200:
  *         description: User edited successfully
  */
-app.post('/api/v1/user', async (req, res) => {
+app.post("/api/v1/user", async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    res.status(400).json({ error: 'Username, email, and password are required' });
+    res
+      .status(400)
+      .json({ error: "Username, email, and password are required" });
     return;
   }
 
@@ -148,11 +151,14 @@ app.post('/api/v1/user', async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    await pool.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword]);
-    res.json({ message: 'User created successfully' });
+    await pool.execute(
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+      [username, email, hashedPassword]
+    );
+    res.json({ message: "User created successfully" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -180,19 +186,22 @@ app.post('/api/v1/user', async (req, res) => {
  *       200:
  *         description: Login successful
  */
-app.post('/api/v1/auth/login', async (req, res) => {
+app.post("/api/v1/auth/login", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(400).json({ error: 'Username and password are required' });
+    res.status(400).json({ error: "Username and password are required" });
     return;
   }
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM users WHERE username = ?', [username]);
+    const [rows] = await pool.execute(
+      "SELECT * FROM users WHERE username = ?",
+      [username]
+    );
 
     if (!rows.length) {
-      res.status(401).json({ error: 'Invalid credentials' });
+      res.status(401).json({ error: "Invalid credentials" });
       return;
     }
 
@@ -201,32 +210,32 @@ app.post('/api/v1/auth/login', async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      res.status(401).json({ error: 'Invalid credentials' });
+      res.status(401).json({ error: "Invalid credentials" });
       return;
     }
 
-    res.json({ message: 'Login successful' });
+    res.json({ message: "Login successful" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 // Serve Swagger documentation
 const swaggerOptions = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Your API Documentation',
-      version: '1.0.0',
-      description: 'API documentation for your Node.js API with MySQL',
+      title: "Your API Documentation",
+      version: "1.0.0",
+      description: "API documentation for your Node.js API with MySQL",
     },
   },
-  apis: ['app.js'],
+  apis: ["app.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start the server
 app.listen(port, () => {
