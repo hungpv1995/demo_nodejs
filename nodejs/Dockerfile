@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-ARG BUILD_ENV
+ARG APP_PORT
 
 WORKDIR /nodejs
 
@@ -8,9 +8,9 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN echo "$BUILD_ENV"
+RUN echo "$APP_PORT"
 
-ENV BUILD_ENV "$BUILD_ENV"
+ENV APP_PORT "$APP_PORT"
 
 COPY . .
 

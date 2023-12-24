@@ -19,7 +19,7 @@ pipeline {
             TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
         }
         steps {
-            sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV -f nodejs/Dockerfile"
+            sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV --build-arg APP_PORT=$APP_PORT -f nodejs/Dockerfile"
 
             sh "cat docker.txt | docker login -u hungpv1195 --password-stdin"
             // tag docker image
