@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:latest
-    container_name: db
+    container_name: db_${buildENV}
     environment:
       MYSQL_ROOT_PASSWORD: training-2023
       MYSQL_DATABASE: users
@@ -24,7 +24,7 @@ services:
     build:
       context: nodejs/.
       dockerfile: Dockerfile
-    container_name: app
+    container_name: app_${buildENV}
     depends_on:
       - db
     ports:
