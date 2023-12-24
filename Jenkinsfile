@@ -19,6 +19,8 @@ pipeline {
         steps {
             echo "${env}"
 
+            echo "${buildENV}"
+
             sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV -f nodejs/Dockerfile"
 
             sh "cat docker.txt | docker login -u hungpv1195 --password-stdin"
