@@ -38,5 +38,7 @@ services:
       - app-network-${ENV}
 
 networks:
-  app-network-${ENV}:
+  app-network-dev:
+    external: true
+  app-network-prod:
     external: true
