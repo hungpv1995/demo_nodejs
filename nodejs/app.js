@@ -8,8 +8,6 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const app = express();
 const port = process.env.APP_PORT;
 
-console.log(process.env.BUILD_ENV);
-
 // Create a MySQL connection pool
 const pool = mysql.createPool({
   host: "db",
