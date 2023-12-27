@@ -34,6 +34,8 @@ services:
       DB_USER: training
       DB_PASSWORD: training_pw
       DB_DATABASE: users
+      APP_PORT: ${APP_PORT}
+
     networks:
       - app-network-${ENV}
 
