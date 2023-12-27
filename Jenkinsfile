@@ -33,21 +33,21 @@ pipeline {
             sh "docker rmi -f hungpv1195/demo-build-dotnet:$TAG"
         } 
     }
-	// stage ("Deploy") {
-	//     agent {
-    //         node {
-    //             label "Target-Server"
-    //             customWorkspace "D:/SETA/Workspace/Jenkins/devops-training-$ENV/"
-    //         }
-    //     }
-    //     environment {
-    //         TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
-    //     }
-	//     steps {
-    //         sh "sed -i 's/{tag}/$TAG/g' D:/SETA/Workspace/Jenkins/devops-training-$ENV/docker-compose.yaml"
-    //         sh "docker compose up -d"
-    //     }      
-    // }
+	stage ("Deploy") {
+	    agent {
+            node {
+                label "Target-Server"
+                customWorkspace "D:/SETA/Workspace/Jenkins/devops-training-$ENV/"
+            }
+        }
+        environment {
+            TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
+        }
+	    steps {
+            sh "sed -i 's/{tag}/$TAG/g' D:/SETA/Workspace/Jenkins/devops-training-$ENV/docker-compose.yaml"
+            sh "docker compose up -d"
+        }      
+    }
    }
     
 }

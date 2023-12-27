@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:latest
-    container_name: db_${ENV}
+    container_name: dotnet_db_${ENV}
     environment:
       MYSQL_ROOT_PASSWORD: training-2023
       MYSQL_DATABASE: users
@@ -20,11 +20,11 @@ services:
       - app-network-${ENV}
 
   app:
-    image: hungpv1195/demo-build:{tag}
+    image: hungpv1195/demo-build-dotnet:{tag}
     build:
-      context: nodejs/.
+      context: dotnet/.
       dockerfile: Dockerfile
-    container_name: app_${ENV}
+    container_name: dotnet_app_${ENV}
     depends_on:
       - db
     ports:
