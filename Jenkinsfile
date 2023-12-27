@@ -5,6 +5,8 @@ pipeline {
         NODE = "Build-server"
         DB_PORT = "${ ENV == 'dev' ? '3306' : '3307' }"
         APP_PORT = "${ ENV == 'dev' ? '3000' : '3001' }"
+        DOCKER_HUB_USERNAME = "${DOCKER_HUB_USERNAME}"
+        DOCKER_HUB_PASSWORD = "${DOCKER_HUB_PASSWORD}"
     }
 
    stages {
@@ -21,7 +23,7 @@ pipeline {
         steps {
             sh "docker build nodejs/. -t devops-training-nodejs-$ENV:latest --build-arg BUILD_ENV=$ENV --build-arg APP_PORT=$APP_PORT -f nodejs/Dockerfile"
 
-            sh "cat docker.txt | docker login -u hungpv1195 --password-stdin"
+            sh "docker login -u $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD"
             // tag docker image
             sh "docker tag devops-training-nodejs-$ENV:latest hungpv1195/demo-build:$TAG"
 
