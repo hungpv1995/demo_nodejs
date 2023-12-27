@@ -14,4 +14,4 @@ WORKDIR /dotnet
 
 COPY --from=build-env /dotnet/out .
 
-ENTRYPOINT [ "dotnet", "Dotnet.Docker.dll"]
+ENTRYPOINT [ "dotnet", "DevOpsTrainingDotnet.dll"]
