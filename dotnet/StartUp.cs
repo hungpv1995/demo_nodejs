@@ -14,6 +14,8 @@ namespace DevOpsTrainingDotnet
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("Startup!");
+
             Configuration = configuration;
         }
 
