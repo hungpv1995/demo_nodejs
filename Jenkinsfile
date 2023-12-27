@@ -27,10 +27,10 @@ pipeline {
             sh "docker tag devops-training-dotnet-$ENV:latest hungpv1195/demo-build-dotnet:$TAG"
 
             //push docker image to docker hub
-            sh "docker push hungpv1195/demo-build:$TAG"
+            sh "docker push hungpv1195/demo-build-dotnet:$TAG"
 
             // remove docker image to reduce space on build server	
-            sh "docker rmi -f hungpv1195/demo-build:$TAG"
+            sh "docker rmi -f hungpv1195/demo-build-dotnet:$TAG"
         } 
     }
 	// stage ("Deploy") {
