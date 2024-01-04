@@ -1,0 +1,32 @@
+-- for using kubectl
+export KUBECONFIG=/etc/kubernetes/admin.conf
+and
+chmod 644 /etc/kubernetes/admin.conf
+
+-- Join master need --control-plane
+kubeadm join apiserver.lb:6443 --token yz2vfi.wg5upq1i7gs17w24 \
+	--discovery-token-ca-cert-hash sha256:418fcde8c20224b5c346a19dfd4f28102ca2d54574ea4c1e9ec60d630f0c1de4 \
+	--control-plane --certificate-key 7978e4c58b4e6db1a6a369647317198ceeaedce19410261a666e6b0de9ddf8ad
+
+-- Join worker does not need --control-plane
+kubeadm join apiserver.lb:6443 --token v7m0m2.lsyft7ueb2x4i3xl \
+	--discovery-token-ca-cert-hash sha256:418fcde8c20224b5c346a19dfd4f28102ca2d54574ea4c1e9ec60d630f0c1de4
+
+
+
+kubeadm join apiserver.lb:6443 --token ywl5rt.0w47fzwrtc2vwrar \
+	--discovery-token-ca-cert-hash sha256:297df69575568931397c44517c9981c400bfbe4fbb5fafffa32c9f6c0d8c5f85	
+
+
+kubeadm join apiserver.lb:6443 --token aibdhs.cx5k05rpeeps64hp \
+	--discovery-token-ca-cert-hash sha256:034e42ecb914187383bddbad838930edcc4f22bcf5550317bdcda433159ea902 \
+	--control-plane --certificate-key 35c519eb23d56239681c66f1c8f4fe45b96dfcdccb0718c255d3efa71a5983a6
+
+kubeadm join apiserver.lb:6443 --token aibdhs.cx5k05rpeeps64hp \
+	--discovery-token-ca-cert-hash sha256:034e42ecb914187383bddbad838930edcc4f22bcf5550317bdcda433159ea902
+
+kubectl run -it --rm --restart=Never busybox --image=manhhoangseta/devops-dotnet-app:dev bash
+
+kubeadm join apiserver.lb:6443 --token vg89e7.433blog2gyra43yn \
+	--discovery-token-ca-cert-hash sha256:e919b62d42fd1a73eb508028e686234f8bf299550e9655e09273793c8413290a \
+	--control-plane --certificate-key 997d4ae6c5849635f218902be0a24951426a8607524ec42ae1590ed75df0196d
