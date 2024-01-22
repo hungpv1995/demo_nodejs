@@ -6,13 +6,14 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
   host: "mysql",
-  user: "training",
-  password: "training_pw",
+  port: 3306,
+  user: "root",
+  password: "frPB372dCgDRcTri",
   database: "users",
   waitForConnections: true,
   connectionLimit: 10,
@@ -53,6 +54,19 @@ const checkUserExists = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+// Health check endpoint
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Health check endpoint
+ *     responses:
+ *       200:
+ *         description: Pong response
+ */
+app.get("/", (req, res) => {
+  res.send("<h1>This is demo app of SETA-GROUP-4</h1>");
+});
 
 // Health check endpoint
 /**
@@ -238,6 +252,6 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start the server
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
