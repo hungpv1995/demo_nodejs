@@ -18,19 +18,19 @@ spec:
       containers:
         - name: nodejs-app
           image: hungpv1195/demo-build:{tag}
-          command: ["nodejs", "app.js"]
+          command: ["npm", "start"]
           ports:
             - name: http
               containerPort: 80
-          livenessProbe:
-            exec:
-              command:
-                - "true"
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 3
-            periodSeconds: 15
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - "true"
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 15
