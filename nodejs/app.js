@@ -66,7 +66,7 @@ const checkUserExists = async (req, res, next) => {
  *         description: Pong response
  */
 app.get("/", (req, res) => {
-  res.sendFile(path.join("index.html"));
+  res.sendFile(path.join(__dirname, `index.html`));
 });
 
 // Health check endpoint
