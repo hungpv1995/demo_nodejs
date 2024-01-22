@@ -4,6 +4,7 @@ const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+const path = require("path");
 
 const app = express();
 const port = 80;
@@ -65,7 +66,7 @@ const checkUserExists = async (req, res, next) => {
  *         description: Pong response
  */
 app.get("/", (req, res) => {
-  res.send("<h1>This is demo app of SETA-GROUP-4</h1>");
+  res.sendFile(path.join("index.html"));
 });
 
 // Health check endpoint
