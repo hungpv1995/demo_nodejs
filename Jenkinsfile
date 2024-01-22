@@ -36,16 +36,20 @@ pipeline {
 	stage ("Deploy") {
 	    agent {
             node {
-                label "Target-Server"
-                customWorkspace "D:/SETA/Workspace/Jenkins/devops-training-$ENV/"
+                label "Build-server"
+                customWorkspace "/mnt/c/users/hungp/ubuntu/devops-training-target-$ENV/"
             }
         }
         environment {
             TAG = sh(returnStdout: true, script: "git rev-parse -short=10 HEAD | tail -n +2").trim()
         }
 	    steps {
-            sh "sed -i 's/{tag}/$TAG/g' D:/SETA/Workspace/Jenkins/devops-training-$ENV/docker-compose.yaml"
-            sh "docker compose up -d"
+            sh "cd /mnt/c/users/hungp/ubuntu/devops-training-target-$ENV/"
+            sh "sed -i 's/{tag}/$TAG/g' k8s-deployment.yaml"
+            sh "kubectl delete -f k8s-service.yaml -napi"
+            sh "kubectl delete -f k8s-deployment.yaml -napi"
+            sh "kubectl apply -f k8s-deployment.yaml -napi"
+            sh "kubectl apply -f k8s-service.yaml -napi"
         }      
     }
    }
