@@ -55,18 +55,32 @@ const checkUserExists = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-// Health check endpoint
+// Homepage
 /**
  * @swagger
  * /:
  *   get:
- *     summary: Health check endpoint
+ *     summary: Homepage
  *     responses:
  *       200:
  *         description: Pong response
  */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, `index.html`));
+});
+
+// Test API
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Test API
+ *     responses:
+ *       200:
+ *         description: test response
+ */
+app.get("/test", (req, res) => {
+  res.json({ message: "demo API" });
 });
 
 // Health check endpoint
