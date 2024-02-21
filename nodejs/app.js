@@ -72,7 +72,7 @@ app.get("/", (req, res) => {
 // Test API
 /**
  * @swagger
- * /:
+ * /test:
  *   get:
  *     summary: Test API
  *     responses:
