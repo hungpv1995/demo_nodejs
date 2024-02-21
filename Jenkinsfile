@@ -49,11 +49,11 @@ pipeline {
 	    steps {
             sh "cd /mnt/c/users/hungp/ubuntu/devops-training-target-$ENV/"
             sh "sed -i 's/{tag}/$TAG/g' k8s-deployment.yaml"
-            // sh "kubectl delete -f k8s-service.yaml -napi"
-            // sh "kubectl delete -f k8s-deployment.yaml -napi"
-            // sh "kubectl apply -f k8s-deployment.yaml -napi"
-            // sh "kubectl apply -f k8s-service.yaml -napi"
-            sh "kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=hungpv1195/demo-build:$TAG -n$KUBE_NAMESPACE"
+            sh "kubectl delete -f k8s-service.yaml -napi"
+            sh "kubectl delete -f k8s-deployment.yaml -napi"
+            sh "kubectl apply -f k8s-deployment.yaml -napi"
+            sh "kubectl apply -f k8s-service.yaml -napi"
+            // sh "kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=hungpv1195/demo-build:$TAG -n$KUBE_NAMESPACE"
         }      
     }
    }
