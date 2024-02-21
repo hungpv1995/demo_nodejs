@@ -83,6 +83,20 @@ app.get("/test", (req, res) => {
   res.json({ message: "demo API" });
 });
 
+// Test API
+/**
+ * @swagger
+ * /test:
+ *   get:
+ *     summary: Test API
+ *     responses:
+ *       200:
+ *         description: test response
+ */
+app.get("/test-v2", (req, res) => {
+  res.json({ message: "new demo API" });
+});
+
 // Health check endpoint
 /**
  * @swagger
