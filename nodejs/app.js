@@ -275,6 +275,9 @@ const swaggerOptions = {
     },
   },
   apis: ["app.js"],
+  swaggerOptions: {
+    cache: false,
+  },
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
