@@ -86,9 +86,9 @@ app.get("/api/v1/test", (req, res) => {
 // Test API
 /**
  * @swagger
- * /test:
+ * /test-v2:
  *   get:
- *     summary: Test API
+ *     summary: Test API V2
  *     responses:
  *       200:
  *         description: test response
