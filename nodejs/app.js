@@ -72,14 +72,14 @@ app.get("/", (req, res) => {
 // Test API
 /**
  * @swagger
- * /test:
+ * /api/v1/test:
  *   get:
  *     summary: Test API
  *     responses:
  *       200:
  *         description: test response
  */
-app.get("/test", (req, res) => {
+app.get("/api/v1/test", (req, res) => {
   res.json({ message: "demo API" });
 });
 
