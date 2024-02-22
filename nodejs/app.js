@@ -83,18 +83,32 @@ app.get("/api/v1/test", (req, res) => {
   res.json({ message: "demo API" });
 });
 
-// Test API v2s
+// /api/v2/demo
 /**
  * @swagger
- * /api/v2/test:
+ * /api/v2/demo:
  *   get:
- *     summary: Test API v2
+ *     summary: Test API
+ *     responses:
+ *       200:
+ *         description: test response
+ */
+app.get("/api/v2/demo", (req, res) => {
+  res.json({ message: "api v2 for demo training DEVOPS" });
+});
+
+// Test API random
+/**
+ * @swagger
+ * /api/v1/random:
+ *   get:
+ *     summary: Test API random
  *     responses:
  *       200:
  *         description: test response random
  */
-app.get("/api/v2/test", (req, res) => {
-  res.json({ message: "Response from api test v2" });
+app.get("/api/v1/random", (req, res) => {
+  res.json({ message: "new demo API random" });
 });
 
 // Health check endpoint
