@@ -83,18 +83,18 @@ app.get("/api/v1/test", (req, res) => {
   res.json({ message: "demo API" });
 });
 
-// Test API random
+// Test API v2s
 /**
  * @swagger
- * /api/v1/random:
+ * /api/v2/test:
  *   get:
- *     summary: Test API random
+ *     summary: Test API v2
  *     responses:
  *       200:
  *         description: test response random
  */
-app.get("/api/v1/random", (req, res) => {
-  res.json({ message: "new demo API random" });
+app.get("/api/v2/test", (req, res) => {
+  res.json({ message: "Response from api test v2" });
 });
 
 // Health check endpoint
